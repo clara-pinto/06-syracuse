@@ -1,3 +1,13 @@
+'''
+Ce module permet de :
+    - générer d'une suite de syracuse
+    - afficher dans un graphique la suite de syracuse
+    - calculer son temps de vol
+    - calculer son temps de vol en amplitude
+    - calculer de son amplitude maximale
+'''
+
+
 #### Fonctions secondaires
 
 
@@ -6,6 +16,9 @@ from plotly.graph_objects import Scatter, Figure
 
 ### NE PAS MODIFIER ###
 def syr_plot(lsyr):
+    '''
+    Permet de construire un graphique
+    '''
     title = "Syracuse" + " (n = " + str(lsyr[0]) + " )"
     fig = Figure({  'layout':   { 'title': {'text': title},
                                 'xaxis': {'title': {'text':"x"}},
@@ -31,9 +44,14 @@ def syracuse_l(n):
     Returns:
         list: la suite de Syracuse de source n
     """
-
-    # votre code ici 
-    l = [ ]
+    l = [n]
+    while n > 1 :
+        # calcul du n suivant
+        if n%2 == 0 :
+            n = int(n/2)
+        else :
+            n = n*3 + 1
+        l.append(n)
     return l
 
 def temps_de_vol(l):
@@ -45,11 +63,12 @@ def temps_de_vol(l):
     Returns:
         int: le temps de vol
     """
-    
-    # votre code ici
-
     n = 0
+    for i, elt in enumerate(l) :
+        if elt == 1 :
+            n = i
     return n
+
 
 def temps_de_vol_en_altitude(l):
     """Retourne le temps de vol en altitude d'une suite de Syracuse
@@ -60,10 +79,13 @@ def temps_de_vol_en_altitude(l):
     Returns:
         int: le temps de vol en altitude
     """
-
-    # votre code ici
-
     n = 0
+    u0 = l[0]
+    for elt in l[1:]:
+        if elt > u0 :
+            n += 1
+        else :
+            break
     return n
 
 
@@ -76,10 +98,12 @@ def altitude_maximale(l):
     Returns:
         int: l'altitude maximale
     """
-    
+
     # votre code ici
-    
     n = 0
+    for elt in l:
+        if n < elt :
+            n = max(n, elt)
     return n
 
 
@@ -87,7 +111,9 @@ def altitude_maximale(l):
 
 
 def main():
-
+    '''
+    Permet d'afficher les valeurs du temps de vol, du temps de vol en altitude et de l'amplitude max
+    '''
     # vos appels à la fonction secondaire ici
     lsyr = syracuse_l(15)
     syr_plot(lsyr)
